@@ -1,5 +1,7 @@
 -std=c++20
 -I/home/echuniu/.platformio/packages/framework-arduinoespressif32/cores/esp32
+-I/home/echuniu/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32s3/include/
+-I/home/echuniu/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32s3/include/driver/include/
 -I/home/echuniu/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32s3/include/hal/include
 -I/home/echuniu/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32s3/include/xtensa/include
 -I/home/echuniu/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32s3/include/xtensa/include
@@ -23,4 +25,4 @@
 -I/home/echuniu/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32c3/include/esp_hw_support/include
 -I/home/echuniu/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32s3/include/soc/esp32s3/include
 -I/home/echuniu/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32s3/include/esp32-camera/driver/include
--I/include.
+-I./include
