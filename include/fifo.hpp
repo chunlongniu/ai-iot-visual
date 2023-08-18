@@ -62,7 +62,7 @@ namespace fifo {
                     digitalRead(D4) << 4|
                     digitalRead(D5) << 5|
                     digitalRead(D6) << 6|
-                    digitalRead(D6) << 7;
+                    digitalRead(D7) << 7;
                 digitalWrite(RCK, 0);
                 return b;
             }
