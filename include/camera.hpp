@@ -330,13 +330,33 @@ namespace fifo_camera {
             PixelConfig* _config;
             I2C* _i2c; 
         public:
-            Esp32(PixelConfig* config, unsigned char* frame, Camera* camera, I2C* i2c);
-            void init();
-            void prepareCapture();
-            void startCapture();
-            void stopCapture();
-            void readFrame();
-            ~Esp32();
+            Esp32(){};
+
+            void setup(PixelConfig* config, unsigned char* frame, Camera* camera, I2C* i2c){
+                 _config = config;
+                 _frame  = frame;
+                 _camera = camera;
+                 _i2c    = i2c;
+            };
+
+            void init() {
+                _i2c->init();
+                _camera->init();
+            };
+
+            void prepareCapture() {
+                _camera->prepareCapture();
+            };
+            void startCapture() {
+                _camera->startCapture();
+            };
+            void stopCapture() {
+                _camera->stopCapture;
+            };
+            void readFrame() {
+                _camera->readFrame((*_frame), _config->x_res, _config->y_res, _config->bytes_per_pixel);
+            };
+            ~Esp32() {};
     };
 
 };
