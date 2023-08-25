@@ -1,3 +1,5 @@
+#ifndef __FIFO_HPP__
+#define __FIFO_HPP__
 #include "Arduino.h"
 #include "esp32-hal-gpio.h"
 #include "esp32-hal.h"
@@ -82,3 +84,4 @@ namespace fifo {
     };
 
 };
+#endif

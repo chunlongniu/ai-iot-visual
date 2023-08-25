@@ -1,3 +1,6 @@
+#ifndef __CAMERA_HPP__
+#define __CAMERA_HPP__
+
 #include <Arduino.h>
 #include <i2c.hpp>
 #include <fifo.hpp>
@@ -8,7 +11,7 @@ namespace sensor = OV7725;
 
 namespace fifo_camera {
 
-    template<class I2C, int RRST, int WRST, int RCK, int WR, int D0, int D1, int D2, int D3, int D4, int D5, int D6, int D7>
+    template<typename I2C, int RRST, int WRST, int RCK, int WR, int D0, int D1, int D2, int D3, int D4, int D5, int D6, int D7>
     class Camera {
         private:
             I2C& _i2c;
@@ -296,13 +299,45 @@ namespace fifo_camera {
         unsigned int bytes_per_pixel;
     } PixelConfig;
 
+
+    namespace esp32 {
+        const int VSYNC = GPIO_NUM_32;
+        const int SIOD  = GPIO_NUM_21;
+        const int SIOC  = GPIO_NUM_22;
+
+        const int RRST  = GPIO_NUM_17;
+        const int WRST  = GPIO_NUM_16;
+        const int RCK   = GPIO_NUM_17;
+        const int WR    = GPIO_NUM_0;
+
+        const int D0    = GPIO_NUM_13;
+        const int D1    = GPIO_NUM_12;
+        const int D2    = GPIO_NUM_14;
+        const int D3    = GPIO_NUM_27;
+        const int D4    = GPIO_NUM_26;
+        const int D5    = GPIO_NUM_25;
+        const int D6    = GPIO_NUM_35;
+        const int D7    = GPIO_NUM_34;
+        //i2c::I2C<SIOD, SIOC> _i2c;
+        // fifo_camera::Camera<i2c::I2C<SIOD, SIOC>, RRST, WRST, RCK, WR, D0, D1, D2, D3, D4, D5, D6, D7> _camera(_i2c);
+    };
+    
+    template<typename Camera, typename I2C>
     class Esp32 {
         private:
-            unsigned char _frame;
+            unsigned char* _frame;
+            Camera* _camera;
+            PixelConfig* _config;
+            I2C* _i2c; 
         public:
-            Esp32();
+            Esp32(PixelConfig* config, unsigned char* frame, Camera* camera, I2C* i2c);
             void init();
+            void prepareCapture();
+            void startCapture();
+            void stopCapture();
+            void readFrame();
             ~Esp32();
     };
 
 };
+#endif

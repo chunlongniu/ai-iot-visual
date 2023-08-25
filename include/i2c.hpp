@@ -113,7 +113,7 @@ namespace i2c {
                     return false;
                 }
                 pushByte(data);
-                if (!getAck(data)) {
+                if (!getAck()) {
                     end();
                     return false;
                 }
