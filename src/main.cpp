@@ -1,3 +1,4 @@
+#include "esp32-hal-gpio.h"
 #include "i2c.hpp"
 #include <Arduino.h>
 #include <camera.hpp>
@@ -28,4 +29,13 @@ void setup() {
 }
 
 void loop() {
+    while(!digitalRead(esp32::VSYNC));
+    while (digitalRead(esp32::VSYNC));
+    _esp32.prepareCapture();
+    _esp32.startCapture();
+    while(!digitalRead(esp32::VSYNC));
+    _esp32.stopCapture();
+
+    //color
+    _esp32.readFrame();
 }

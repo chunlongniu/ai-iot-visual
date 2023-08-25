@@ -326,7 +326,7 @@ namespace fifo_camera {
     class Esp32 {
         private:
             unsigned char* _frame;
-            Camera* _camera;
+            Camera * _camera;
             PixelConfig* _config;
             I2C* _i2c; 
         public:
@@ -351,10 +351,10 @@ namespace fifo_camera {
                 _camera->startCapture();
             };
             void stopCapture() {
-                _camera->stopCapture;
+                _camera->stopCapture();
             };
             void readFrame() {
-                _camera->readFrame((*_frame), _config->x_res, _config->y_res, _config->bytes_per_pixel);
+                _camera->readFrame(_frame, _config->x_res, _config->y_res, _config->bytes_per_pixel);
             };
             ~Esp32() {};
     };
