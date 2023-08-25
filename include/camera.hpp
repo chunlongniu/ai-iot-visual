@@ -2,6 +2,7 @@
 #define __CAMERA_HPP__
 
 #include <Arduino.h>
+#include <cstring>
 #include <i2c.hpp>
 #include <fifo.hpp>
 #include <adapter.hpp>
@@ -356,6 +357,10 @@ namespace fifo_camera {
             void readFrame() {
                 _camera->readFrame(_frame, _config->x_res, _config->y_res, _config->bytes_per_pixel);
             };
+
+            void resetFrame() {
+                memset(_frame, 0, sizeof(_frame));
+            }
             ~Esp32() {};
     };
 

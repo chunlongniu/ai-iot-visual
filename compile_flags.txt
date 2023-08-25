@@ -26,4 +26,8 @@
 -I/home/echuniu/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32c3/include/esp_hw_support/include
 -I/home/echuniu/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32s3/include/soc/esp32s3/include
 -I/home/echuniu/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32s3/include/esp32-camera/driver/include
+-I/home/echuniu/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_wifi/include
+-I/home/echuniu/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src
+-I/home/echuniu/.platformio/packages/framework-arduinoespressif32/libraries/HTTPClient/src
+-I./.pio/libdeps/esp32dev/ArduinoJson/src/
 -I./include
