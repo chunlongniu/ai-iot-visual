@@ -203,7 +203,8 @@ namespace ov2640 {
      const int Y2_GPIO_NUM    =   5;
      const int VSYNC_GPIO_NUM =  25;
      const int HREF_GPIO_NUM  =  23;
-     const int PCLK_GPIO_NUM  =  22;   
+     const int PCLK_GPIO_NUM  =  22;
+     const char PART_BOUNDARY[] = "123456789000000000000987654321";
 }
 
 #endif

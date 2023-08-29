@@ -369,62 +369,64 @@ namespace fifo_camera {
     };
 
 };
+
 namespace NormalCamera {
     template<int XCLK_GPIO_NUM, int D0, int D1, int D2, int D3, int D4, int D5, int D6, int D7, 
             int PCLK_GPIO_NUM, int HREF_GPIO_NUM, int VSYNC_GPIO_NUM, int PWDN_GPIO_NUM,
             int RESET_GPIO_NUM, int SIOD_GPIO_NUM, int SIOC_GPIO_NUM>
 
     class Sensor {
-        camera_config_t config;
-        
-        Sensor() {
-            config.ledc_channel = LEDC_CHANNEL_0;
-            config.ledc_timer = LEDC_TIMER_0;
-            config.pin_d0 = D0;
-            config.pin_d1 = D1;
-            config.pin_d2 = D2;
-            config.pin_d3 = D3;
-            config.pin_d4 = D4;
-            config.pin_d5 = D5;
-            config.pin_d6 = D6;
-            config.pin_d7 = D7;
-            config.pin_xclk = XCLK_GPIO_NUM;
-            config.pin_pclk = PCLK_GPIO_NUM;
-            config.pin_vsync = VSYNC_GPIO_NUM;
-            config.pin_href = HREF_GPIO_NUM;
-            config.pin_sccb_sda = SIOD_GPIO_NUM;
-            config.pin_sccb_scl = SIOC_GPIO_NUM;
-            config.pin_pwdn = PWDN_GPIO_NUM;
-            config.pin_reset = RESET_GPIO_NUM;
-            config.xclk_freq_hz = 20000000;
-            config.pixel_format = PIXFORMAT_JPEG;
-            if (psramFound()) {
-              config.frame_size = FRAMESIZE_UXGA;
-              config.jpeg_quality = 10;
-              config.fb_count = 2;
-            } else {
-              config.frame_size = FRAMESIZE_SVGA;
-              config.jpeg_quality = 12;
-              config.fb_count = 1;
-            }
-        }
+        public:
 
-        esp_err_t init_camera(void) {
-            esp_err_t err = esp_camera_init(&config);
-            if (err != ESP_OK) {
-                Serial.println("init camera failed");
-                return err;
+            camera_config_t config;
+            Sensor() {
+                config.ledc_channel = LEDC_CHANNEL_0;
+                config.ledc_timer = LEDC_TIMER_0;
+                config.pin_d0 = D0;
+                config.pin_d1 = D1;
+                config.pin_d2 = D2;
+                config.pin_d3 = D3;
+                config.pin_d4 = D4;
+                config.pin_d5 = D5;
+                config.pin_d6 = D6;
+                config.pin_d7 = D7;
+                config.pin_xclk = XCLK_GPIO_NUM;
+                config.pin_pclk = PCLK_GPIO_NUM;
+                config.pin_vsync = VSYNC_GPIO_NUM;
+                config.pin_href = HREF_GPIO_NUM;
+                config.pin_sccb_sda = SIOD_GPIO_NUM;
+                config.pin_sccb_scl = SIOC_GPIO_NUM;
+                config.pin_pwdn = PWDN_GPIO_NUM;
+                config.pin_reset = RESET_GPIO_NUM;
+                config.xclk_freq_hz = 20000000;
+                config.pixel_format = PIXFORMAT_JPEG;
+                if (psramFound()) {
+                  config.frame_size = FRAMESIZE_UXGA;
+                  config.jpeg_quality = 10;
+                  config.fb_count = 2;
+                } else {
+                  config.frame_size = FRAMESIZE_SVGA;
+                  config.jpeg_quality = 12;
+                  config.fb_count = 1;
+                }
             }
-            else
-                return ESP_OK;
-        }
 
-        void take_photo(http) {
-            Serial.println("Take photo"); 
-            camera_fb_t *pic = esp_camera_fb_get();
-            esp_camera_fb_return(pic);
-            vTaskDelay(5000/portTICK_RATE_MS);
-        }
+            esp_err_t init_camera(void) {
+                esp_err_t err = esp_camera_init(&config);
+                if (err != ESP_OK) {
+                    Serial.println("init camera failed");
+                    return err;
+                }
+                else
+                    return ESP_OK;
+            }
+
+            void take_photo() {
+                Serial.println("Take photo"); 
+                camera_fb_t *pic = esp_camera_fb_get();
+                esp_camera_fb_return(pic);
+                vTaskDelay(5000/portTICK_RATE_MS);
+            }
     };
 };
 #endif
