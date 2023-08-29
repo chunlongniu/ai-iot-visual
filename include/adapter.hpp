@@ -187,6 +187,23 @@ namespace OV7725 {
      const int REG_LAST       = REG_SATCTR;
 };
 
-
+namespace ov2640 {
+     const int PWDN_GPIO_NUM  =  32;
+     const int RESET_GPIO_NUM =  -1;
+     const int XCLK_GPIO_NUM  =   0;
+     const int SIOD_GPIO_NUM  =  26;
+     const int SIOC_GPIO_NUM  =  27;
+     const int Y9_GPIO_NUM    =  35;
+     const int Y8_GPIO_NUM    =  34;
+     const int Y7_GPIO_NUM    =  39;
+     const int Y6_GPIO_NUM    =  36;
+     const int Y5_GPIO_NUM    =  21;
+     const int Y4_GPIO_NUM    =  19;
+     const int Y3_GPIO_NUM    =  18;
+     const int Y2_GPIO_NUM    =   5;
+     const int VSYNC_GPIO_NUM =  25;
+     const int HREF_GPIO_NUM  =  23;
+     const int PCLK_GPIO_NUM  =  22;   
+}
 
 #endif
