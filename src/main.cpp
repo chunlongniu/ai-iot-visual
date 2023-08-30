@@ -4,13 +4,16 @@
 #include "adapter.hpp"
 #include <Arduino.h>
 #include <camera.hpp>
+#include "HTTPClient.h"
+#include <Arduino_JSON.h>
 
 using namespace fifo_camera;
 using namespace ov2640;
+unsigned long timeDelay = 5000;
 
-const char* ssid = "";
-const char* passwd = "";
-const char* baseURL = "";
+const char* ssid = "XIAOXINXIN-TPLINK";
+const char* passwd = "Cyy879200*$$";
+const char* baseURL = "http://10.2.0.11:5000/devices";
 
 
 NormalCamera::Sensor<ov2640::XCLK_GPIO_NUM, ov2640::Y2_GPIO_NUM, ov2640::Y3_GPIO_NUM,
@@ -25,10 +28,26 @@ WiFiConfig wifi(ssid, passwd);
 
 void setup() {
     Serial.begin(115200);
+    //Serial.begin(9600);
     wifi.setup();
-
-
 }
 
 void loop() {
+    while(true) {
+        Serial.println("request ---");
+        String payload = "";
+        HTTPClient http_client;
+        http_client.addHeader("Content-Type", "application/json");
+        http_client.begin(baseURL);
+        int res_code = http_client.GET();
+        if (res_code > 0) {
+            Serial.println(res_code);
+            payload = http_client.getString();
+            Serial.println(payload);
+        } else {
+            Serial.println("error");
+        }
+        http_client.end();
+        delay(timeDelay);
+    }
 }

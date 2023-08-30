@@ -1,4 +1,3 @@
-#include <Arduino.h>
 #include <ArduinoJson.h>
 #include "ArduinoJson/Document/StaticJsonDocument.hpp"
 #include "HardwareSerial.h"
@@ -29,6 +28,10 @@ class WiFiConfig {
             Serial.println("");
             Serial.print("Connect to WiFi network with IP Address:");
             Serial.println(WiFi.localIP());
+        }
+
+        wl_status_t status() {
+            return WiFi.status();
         }
 };
 
