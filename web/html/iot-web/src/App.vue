@@ -1,15 +1,19 @@
 <template>
-    <NavBarMenu/> 
+    <NavBarMenu/>
+    <SiderBarMenu/>
+    >
 </template>
 
 <script>
 import NavBarMenu from './components/NavBarMenu.vue'
+import SiderBarMenu from './components/SiderBarMenu.vue';
 
 export default {
   name: 'App',
   components: {
-    NavBarMenu
-  }
+    NavBarMenu,
+    SiderBarMenu
+}
 }
 </script>
 
