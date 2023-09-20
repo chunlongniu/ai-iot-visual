@@ -1,3 +1,4 @@
+#include <cstdint>
 #include <string.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -6,6 +7,7 @@
 #include "esp_wifi.h"
 #include "esp_event.h"
 #include "esp_log.h"
+#include "hal/gpio_types.h"
 #include "nvs_flash.h"
 #include "esp_http_client.h"
 #include "lwip/err.h"
@@ -282,6 +284,7 @@ namespace mqtt
             ESP_LOGI(TAG, "MQTT_EVENT_DATA");
             printf("TOPIC=%.*s\r\n", event->topic_len, event->topic);
             printf("DATA=%.*s\r\n", event->data_len, event->data);
+
             break;
         case MQTT_EVENT_ERROR:
             ESP_LOGI(TAG, "MQTT_EVENT_ERROR");
@@ -330,12 +333,55 @@ namespace mqtt
 namespace motor {
     const gpio_num_t MOTOR_1_GPIO_OUTPUT = GPIO_NUM_18;
     const gpio_num_t MOTOR_2_GPIO_OUTPUT = GPIO_NUM_25;
+    const gpio_num_t MOTOR_DIRT_1_GPIO_OUTPUT = GPIO_NUM_17;
+    const gpio_num_t MOTOR_DIRT_2_GPIO_OUTPUT = GPIO_NUM_26;
+    const uint32_t LOWER = 0x0;
+    const uint32_t HIGHER = 0x1;
 
     static void config_led(void) {
         gpio_reset_pin(MOTOR_1_GPIO_OUTPUT);
         gpio_reset_pin(MOTOR_2_GPIO_OUTPUT);
+        gpio_reset_pin(MOTOR_DIRT_1_GPIO_OUTPUT);
+        gpio_reset_pin(MOTOR_DIRT_2_GPIO_OUTPUT);
         gpio_set_direction(MOTOR_1_GPIO_OUTPUT, GPIO_MODE_OUTPUT);
         gpio_set_direction(MOTOR_2_GPIO_OUTPUT, GPIO_MODE_OUTPUT);
+        gpio_set_direction(MOTOR_DIRT_1_GPIO_OUTPUT, GPIO_MODE_OUTPUT);
+        gpio_set_direction(MOTOR_DIRT_2_GPIO_OUTPUT, GPIO_MODE_OUTPUT);
+    }
+
+    void forward() {
+        gpio_set_level(MOTOR_1_GPIO_OUTPUT, HIGHER);
+        gpio_set_level(MOTOR_2_GPIO_OUTPUT, HIGHER);
+        gpio_set_level(MOTOR_DIRT_1_GPIO_OUTPUT, LOWER);
+        gpio_set_level(MOTOR_DIRT_2_GPIO_OUTPUT, LOWER);
+    }
+
+    void backward() {
+        gpio_set_level(MOTOR_1_GPIO_OUTPUT, HIGHER);
+        gpio_set_level(MOTOR_2_GPIO_OUTPUT, HIGHER);
+        gpio_set_level(MOTOR_DIRT_1_GPIO_OUTPUT, HIGHER);
+        gpio_set_level(MOTOR_DIRT_2_GPIO_OUTPUT, HIGHER);
+    }
+
+    void forward_left() {
+        gpio_set_level(MOTOR_1_GPIO_OUTPUT, HIGHER);
+        gpio_set_level(MOTOR_2_GPIO_OUTPUT, LOWER);
+        gpio_set_level(MOTOR_DIRT_1_GPIO_OUTPUT, LOWER);
+        gpio_set_level(MOTOR_DIRT_2_GPIO_OUTPUT, LOWER);
+    }
+
+    void forward_right() {
+        gpio_set_level(MOTOR_1_GPIO_OUTPUT, LOWER);
+        gpio_set_level(MOTOR_2_GPIO_OUTPUT, HIGHER);
+        gpio_set_level(MOTOR_DIRT_1_GPIO_OUTPUT, LOWER);
+        gpio_set_level(MOTOR_DIRT_2_GPIO_OUTPUT, LOWER);
+    }
+
+    void stop_motor() {
+        gpio_set_level(MOTOR_1_GPIO_OUTPUT, LOWER);
+        gpio_set_level(MOTOR_2_GPIO_OUTPUT, LOWER);
+        gpio_set_level(MOTOR_DIRT_1_GPIO_OUTPUT, LOWER);
+        gpio_set_level(MOTOR_DIRT_2_GPIO_OUTPUT, LOWER);
     }
 
     void set_motor1_up() {

@@ -1,3 +1,4 @@
+import logging
 from fastapi import APIRouter, HTTPException
 
 router = APIRouter(
@@ -6,9 +7,12 @@ router = APIRouter(
     responses={404: {"description": "Not found"}}
 )
 
+logger = logging.getLogger(__name__)
+
 
 @router.get("/")
 async def list_all_devices():
+    logging.info("list devices")
     return ["all"]
 
 
@@ -19,4 +23,10 @@ async def get_device_by_id(_id: str):
 
 @router.post("/")
 async def create_device():
-    pass
+    return "this is a post"
+
+
+@router.put("/{opera}")
+async def update_device(opera: str):
+    logging.info(f"the operation: {opera}")
+    return f"The operation: {opera}"
