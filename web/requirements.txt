@@ -1,2 +1,5 @@
 fastapi
 uvicorn
+asyncio-mqtt
+aiofiles
+pyyaml

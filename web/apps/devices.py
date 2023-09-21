@@ -1,5 +1,6 @@
 import logging
 from fastapi import APIRouter, HTTPException
+from . utils import publish_msg
 
 router = APIRouter(
     prefix="/devices",
@@ -26,7 +27,9 @@ async def create_device():
     return "this is a post"
 
 
-@router.put("/{opera}")
+router.put("/{opera}")
+
+
 async def update_device(opera: str):
     logging.info(f"the operation: {opera}")
     return f"The operation: {opera}"
